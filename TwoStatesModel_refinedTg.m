@@ -1,8 +1,5 @@
 clear all;clc;close all;
 
-%% Find Path
-
-
 %% Prepare Variable
 k = 8.617*10^-5;
 NBOratio_i = zeros(1,9); 
