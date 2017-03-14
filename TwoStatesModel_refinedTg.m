@@ -1,7 +1,7 @@
 clear all;clc;close all;
 
 %% Find Path
-user = input('User is ','s');
+
 
 %% Prepare Variable
 k = 8.617*10^-5;
@@ -14,7 +14,7 @@ FOratio_model = zeros(1,9);
 
 for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
 %% Input Data 
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
 data = fopen('md300K.lammpstrj');
 traj = zeros(3000,5);
 for n=1:9
