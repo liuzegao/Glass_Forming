@@ -1,7 +1,4 @@
-clear all;clc;close all;
-
-%% Find Path
-user = input('User is ','s');
+clear all;clc;close all; 
 
 %% Prepare Variable
 k = 8.617*10^-5;
@@ -18,7 +15,7 @@ N_Si_i = zeros(1,9);
 
 for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
 %% Input Data 
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
 data = fopen('md300K.lammpstrj');
 traj = zeros(3000,5);
 for n=1:9
@@ -105,10 +102,10 @@ D_E = 0.5; %%Test Delta Energy between State 1 and State 2
 switch(i_c) %Select Different Tg
     case 1
         Tg = 1800.6;
-        %D_E = 0.6;
+        %D_E = 0.5;
     case 2
         %D_E = 0.5;
-        Tg =1675;
+        Tg =1675.0;
     case 3
        %D_E = 0.5;
        Tg= 1791.6;
@@ -125,7 +122,7 @@ switch(i_c) %Select Different Tg
         %D_E = 0.8;
         Tg = 1160.9 ;
     case 8
-        %D_E = 1; %%Test D_E Can I do this?
+        D_E = 0.12; %%Test D_E Can I do this?
         Tg = 1132.4 ;
     case 9
        %D_E = 0.1;

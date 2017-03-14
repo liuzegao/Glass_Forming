@@ -1,14 +1,9 @@
 clear all; close all; clc;
 
-
-user = input('User is ','s');
-%defualt Ca composition = 30%
-
 %i_c is now from 1:9 meaning 0% to 80% 
-
 for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
 %% Input Data 300K
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
 data = fopen('md300K.lammpstrj');
 traj = zeros(3000,5);
 for n=1:9
@@ -108,13 +103,12 @@ legend('NBO simulation 300K','BO 300K','FO 300K');
 %% Input Data 2500K %%
 clear all;
 
-user = input('User is ','s');
 %defualt Ca composition = 30%
 
 %i_c is now from 1:9 meaning 0% to 80% 
 
 for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
-cd (['/Users/',user,'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
 data = fopen('md2500K.lammpstrj');
 traj = zeros(3000,5);
 for n=1:9

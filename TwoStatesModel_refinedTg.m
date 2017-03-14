@@ -2,25 +2,39 @@ clear all;clc;close all;
 
 %% Prepare Variable
 k = 8.617*10^-5;
-NBOratio_i = zeros(1,9); 
-BOratio_i= zeros(1,9);
-FOratio_i = zeros(1,9);
+NBOratio_simulation = zeros(1,9); 
+BOratio_simulation= zeros(1,9);
+FOratio_simulation = zeros(1,9);
 NBOratio_model = zeros(1,9);
 BOratio_model = zeros(1,9);
 FOratio_model = zeros(1,9);
 
 for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
+    display(i_c)
 %% Input Data 
 cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
 data = fopen('md300K.lammpstrj');
-traj = zeros(3000,5);
-for n=1:9
+
+%%Pre-processing Data and convert to a matrix in traj
+if i_c == 3 || i_c == 5 %In old data, only composition 20 and 40 has 101 frames
+    N_frame = 101;
+else
+    N_frame = 21;
+end
+for i_frame = 1:1:N_frame %for frame
+for n=1:4
+  tline = fgetl(data); 
+end
+N_atom = str2num(tline);
+for n=5:9
   tline = fgetl(data);
 end
-for i =10:1:3004  %% First time step 4410000 Last time step 4510000  
+traj = zeros(N_atom,5);
+for i =1:1:N_atom  %First time step 4410000 Last time step 4510000  
     tline = str2num(fgetl(data));
-    traj(i-9,:)=tline;
+    traj(i,:)=tline; %traj=matrix
 end
+
 %%id type x y z 
 %{
 variable        Al equal 1
@@ -80,7 +94,8 @@ for atom_O = 1:1:N_atom
                 FO = FO+1;       
         end      
     end
-end 
+end
+end %End Frame
 %% Calculate Theoretical Value and Build Two-States Model
 D_E = 0.5; %%Test Delta Energy between State 1 and State 2 
 switch(i_c) %Select Different Tg
@@ -118,7 +133,6 @@ N_FO=0; %Number of Structure 1
 N_M1=0;
 N_M2=0;
 P_M1 = 1/(exp(-D_E/(k*Tg))+1);  %M1 -> Model 1 Ordered Model 
-display(P_M1);
 
 for j = 1:1:N_Ca
     if N_NBO <= 4*N_Si
@@ -146,14 +160,15 @@ for j = 1:1:N_Ca
     end
 end
 
+%Simulation Data Calculation
+NBOratio_simulation(i_c) = NBO/N_O;
+BOratio_simulation(i_c) = BO/N_O;
+FOratio_simulation(i_c) = FO/N_O;
+
+%Theoretical Data Calculation
 NBOratio_model(i_c) = N_NBO/N_O;
 BOratio_model(i_c) = N_BO/N_O;
 FOratio_model(i_c) = N_FO/N_O;
-
-%Simulation Data Calculation
-NBOratio_i(i_c) = NBO/N_O;
-BOratio_i(i_c) = BO/N_O;
-FOratio_i(i_c) = FO/N_O;
 
 d_NBO_i(i_c) = N_NBO/N_O - NBO/N_O;
 d_BO_i(i_c) = N_BO/N_O - BO/N_O;
@@ -165,7 +180,7 @@ end
 %%Plot
 i = 1:1:9;
 i = (i-1)*10;
-plot(i,NBOratio_model,'-.or',i,BOratio_model,'-.ok',i,FOratio_model,'-.ob',i,NBOratio_i,'-*r',i,BOratio_i,'-*k',i,FOratio_i,'-*b',... 
+plot(i,NBOratio_model,'-.or',i,BOratio_model,'-.ok',i,FOratio_model,'-.ob',i,NBOratio_simulation,'-*r',i,BOratio_simulation,'-*k',i,FOratio_simulation,'-*b',... 
     'LineWidth',2,...
     'MarkerSize',5,...
     'MarkerFaceColor',[0.5,0.5,0.5]);
