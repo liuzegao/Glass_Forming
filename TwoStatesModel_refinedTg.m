@@ -46,7 +46,7 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
         Tg = 1132.4 ;
         cutoff_Si_O = 2.05;
     case 9
-       D_E = 0.1;
+        D_E = 1;
         Tg = 1166.7 ;
         cutoff_Si_O = 2.05;
     end

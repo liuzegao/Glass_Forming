@@ -19,37 +19,37 @@ TO_around_per_Ca = zeros(1,8);
 for  i_c = 2:9 % i_c 1-> 0% 2->10% 3->10%...
 switch(i_c)
     case 2    
-    Cutoff_NBO_Ca = 2.85;
-    Cutoff_BO_Ca = 3.05;
-    Cutoff_FO_Ca = 2.55;
-    case 3    
-    Cutoff_NBO_Ca = 3.15;
-    Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 2.75;
-    case 4    
-    Cutoff_NBO_Ca = 2.85;
-    Cutoff_BO_Ca = 3.05;
-    Cutoff_FO_Ca = 2.75;
-        case 5    
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca = 2.95;
-     Cutoff_FO_Ca = 2.95;
-        case 6    
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 2.95;
-    case  7
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca =2.95;
-    Cutoff_FO_Ca = 2.95;
-         case 8    
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 3.05;
-        case 9    
     Cutoff_NBO_Ca = 3.05;
+    Cutoff_BO_Ca = 3.05;
+    Cutoff_FO_Ca = 2.75;
+    case 3    
+    Cutoff_NBO_Ca = 3.25;
+    Cutoff_BO_Ca = 2.9;
+    Cutoff_FO_Ca = 3;
+    case 4    
+    Cutoff_NBO_Ca = 3.45;
     Cutoff_BO_Ca = 2.85;
-    Cutoff_FO_Ca = 3.05;
+    Cutoff_FO_Ca = 3.15;
+        case 5    
+    Cutoff_NBO_Ca = 3.3;
+    Cutoff_BO_Ca = 2.9;
+     Cutoff_FO_Ca = 3.2;
+        case 6    
+    Cutoff_NBO_Ca = 3.25;
+    Cutoff_BO_Ca = 2.95;
+    Cutoff_FO_Ca = 3.25;
+    case  7
+    Cutoff_NBO_Ca = 3.35;
+    Cutoff_BO_Ca =2.95;
+    Cutoff_FO_Ca = 3.15;
+         case 8    
+    Cutoff_NBO_Ca = 3.25;
+    Cutoff_BO_Ca = 3.05;
+    Cutoff_FO_Ca = 3;
+        case 9    
+    Cutoff_NBO_Ca = 3.35;
+    Cutoff_BO_Ca = 2.9;
+    Cutoff_FO_Ca = 3.1;
 end
  if i_c == 1 %No Ca in composition 0%
       continue;
