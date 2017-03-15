@@ -48,9 +48,9 @@ for D_E = D_E_Initial:0.01:((N_Try)*0.01)
            %D_E = 0.1;
            Tg = 1501.1 ;
         end
-    N_O = N_O_i(i_c);
-    N_Ca = N_Ca_i(i_c);
-    N_Si = N_Si_i(i_c);
+    N_O = O_simulation(i_c);
+    N_Ca = Ca_simulation(i_c);
+    N_Si = Si_simulation(i_c);
     
     N_NBO=0;
     N_BO=N_O-N_Ca;
