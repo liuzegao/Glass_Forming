@@ -19,37 +19,37 @@ TO_around_per_Ca = zeros(1,8);
 for  i_c = 2:9 % i_c 1-> 0% 2->10% 3->10%...
 switch(i_c)
     case 2    
-    Cutoff_NBO_Ca = 3.05;
+    Cutoff_NBO_Ca = 2.85;
+    Cutoff_BO_Ca = 3.05;
+    Cutoff_FO_Ca = 2.55;
+    case 3    
+    Cutoff_NBO_Ca = 3.15;
+    Cutoff_BO_Ca = 2.95;
+    Cutoff_FO_Ca = 2.75;
+    case 4    
+    Cutoff_NBO_Ca = 2.85;
     Cutoff_BO_Ca = 3.05;
     Cutoff_FO_Ca = 2.75;
-    case 3    
-    Cutoff_NBO_Ca = 3.25;
-    Cutoff_BO_Ca = 2.9;
-    Cutoff_FO_Ca = 3;
-    case 4    
-    Cutoff_NBO_Ca = 3.45;
-    Cutoff_BO_Ca = 2.85;
-    Cutoff_FO_Ca = 3.15;
         case 5    
-    Cutoff_NBO_Ca = 3.3;
-    Cutoff_BO_Ca = 2.9;
-     Cutoff_FO_Ca = 3.2;
-        case 6    
-    Cutoff_NBO_Ca = 3.25;
+    Cutoff_NBO_Ca = 2.95;
     Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 3.25;
+     Cutoff_FO_Ca = 2.95;
+        case 6    
+    Cutoff_NBO_Ca = 2.95;
+    Cutoff_BO_Ca = 2.95;
+    Cutoff_FO_Ca = 2.95;
     case  7
-    Cutoff_NBO_Ca = 3.35;
+    Cutoff_NBO_Ca = 2.95;
     Cutoff_BO_Ca =2.95;
-    Cutoff_FO_Ca = 3.15;
+    Cutoff_FO_Ca = 3.05;
          case 8    
     Cutoff_NBO_Ca = 3.25;
     Cutoff_BO_Ca = 3.05;
     Cutoff_FO_Ca = 3;
         case 9    
-    Cutoff_NBO_Ca = 3.35;
-    Cutoff_BO_Ca = 2.9;
-    Cutoff_FO_Ca = 3.1;
+    Cutoff_NBO_Ca = 3.05;
+    Cutoff_BO_Ca = 2.85;
+    Cutoff_FO_Ca = 3.05;
 end
  if i_c == 1 %No Ca in composition 0%
       continue;
@@ -61,16 +61,13 @@ TO_a_Ca = 0;
 N_Ca = 0;
 
 
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+cd (['/Users/',user,'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
 
-data = fopen('md300K_refined.lammpstrj');
+data = fopen('md2500K_refined.lammpstrj');
 
 %%Pre-processing Data and convert to a matrix in traj
-if i_c == 3 || i_c == 5 %In old data, only composition 20 and 40 has 101 frames
     N_frame = 101;
-else
-    N_frame = 21;
-end
+
 for i_frame = 1:1:N_frame %for frame
 for n=1:4
   tline = fgetl(data); 
@@ -102,7 +99,7 @@ L= 34.9159548486583; %Size of the system
             if traj(atom_Ca,2) == 5  %Find the Ca atom    
                 N_Ca = N_Ca+1;
             for atom_O = 1:1:N_atom
-                if traj(atom_O,2) == 9 || 10 || 11
+                if traj(atom_O,2) == 9 || traj(atom_O,2) == 10 || traj(atom_O,2) == 11
                     if abs(traj(atom_O,3)-traj(atom_Ca,3)) < L/2
                     x_delta = abs(traj(atom_O,3)-traj(atom_Ca,3));
                     else
@@ -140,7 +137,6 @@ BO_around_per_Ca(i_c-1) = BO_a_Ca/N_Ca;
 FO_around_per_Ca(i_c-1) = FO_a_Ca/N_Ca;
 %FO_around_per_Ca_Mean(i_c-1) = mean(FO_around_per_Ca(i_c-1));
 %FO_around_per_Ca_STD(i_c-1) = std(FO_around_per_Ca(i_c-1));
-
 
 end
 
@@ -260,7 +256,7 @@ L= 34.9159548486583; %Size of the system
             if traj(atom_Ca,2) == 5  %Find the Ca atom    
                 N_Ca = N_Ca+1;
             for atom_O = 1:1:N_atom
-                if traj(atom_O,2) == 9 || 10 || 11
+                if traj(atom_O,2) == 9 ||traj(atom_O,2) == 10 ||traj(atom_O,2) == 11
                     if abs(traj(atom_O,3)-traj(atom_Ca,3)) < L/2
                     x_delta = abs(traj(atom_O,3)-traj(atom_Ca,3));
                     else
