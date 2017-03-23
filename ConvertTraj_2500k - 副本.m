@@ -4,49 +4,36 @@ clear all; close all; clc;
 
 N_frame = 21;
 user = input('User is ','s');
-data = fopen('md300K.lammpstrj');
+data = fopen('md2500K.lammpstrj');
 %defualt Ca composition = 30%
 %i_c is now from 1:9 meaning 0% to 80% 
 NBOratio_i = zeros(1,9);
 %for  i_c = 1:9    
-for i_c = 1:1:9
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]);
-data = fopen('md300K.lammpstrj');
-fid = fopen('md300K_refined.lammpstrj','w');
-
-display(i_c)
-if i_c == 3 || i_c == 5 %In old data, only composition 20 and 40 has 101 frames
-    N_frame = 101;
-else
-    N_frame = 21;
-end
+for i_c = 5
+cd (['/Users/',user,'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]);
+data = fopen('md2500K.lammpstrj');
+fid = fopen('md2500K_refined.lammpstrj','w');
 
 for i_frame = 1:1:N_frame  %for frame
 
-        for n=1:4
-        tline = fgetl(data);
-            if n == 1
-                Top_string(1,1) = {tline};
-            else
-                Top_string(1,n) = {tline};
-            end
-        end
-        N_atom = str2num(tline);
-        tline = fgetl(data);
-        Top_string(1,5) = {tline};
-        tline = fgetl(data);
-        Top_string(1,6) = {tline};
-        L_item(1,:) = str2num(tline);
-        L = L_item(1,2);
-        for n=7:9
-            tline = fgetl(data);
-            Top_string(1,n) = {tline};
-        end
-        traj = zeros(N_atom,5);
-        for i =1:1:N_atom  %First time step 4410000 Last time step 4510000  
-            tline = str2num(fgetl(data));
-            traj(i,:)=tline; %traj=matrix
-        end
+for n=1:4
+  tline = fgetl(data);
+  if n == 1
+  Top_string(1,1) = {tline};
+  else
+  Top_string(1,n) = {tline};
+  end
+end
+N_atom = str2num(tline);
+for n=5:9
+  tline = fgetl(data);
+  Top_string(1,n) = {tline};
+end
+traj = zeros(N_atom,5);
+for i =1:1:N_atom  %%First time step 4410000 Last time step 4510000  
+    tline = str2num(fgetl(data));
+    traj(i,:)=tline;
+end
 %%id type x y z 
 %{
 variable        Al equal 1
@@ -64,6 +51,7 @@ variable        NBO equal 10
 variable        FO equal 11
 %}
 
+L= 34.9159548486583; %%units?
 NBO = 0;
 BO = 0;
 FO = 0;
@@ -118,7 +106,7 @@ FOratio_i(i_c) = FO/N_O;
     for n=1:9
         fprintf(fid,[char(Top_string(1,n)),'\n']);
     end
-    for i = 1:1:N_atom
+    for i = 1:1:N_atom;
         fprintf(fid,[num2str(traj(i,1)),' ',num2str(traj(i,2)),' ',num2str(traj(i,3)),' ',num2str(traj(i,4)),' ',num2str(traj(i,5)),'\n']);
     end
     display(i_frame);

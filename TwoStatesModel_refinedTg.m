@@ -21,32 +21,32 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
     switch(i_c) %Select Different Tg
     case 1
          Tg = 1800.6;
-        D_E = 1;
+        D_E = 1.2;
     case 2
-        D_E = 1;
+        D_E = 1.2;
          Tg =1675.0;
     case 3
-       D_E = 1;
+       D_E = 1.2;
        Tg= 1791.6;
     case 4
-        D_E = 0.5;
+        D_E = 1;
          Tg =1469.9;
     case 5
-       D_E = 1;
+       D_E = 1.2;
        Tg = 1347.7 ;
     case 6 
-        D_E = 0.35;
+        D_E = 0.5;
         Tg = 1202.5;
     case 7
-        D_E = 0.25;
+        D_E = 0.5;
         Tg = 1160.9 ;
         cutoff_Si_O = 1.95;
     case 8
-        D_E = 0.12; %%Test D_E Can I do this?
+        D_E = 0.3; %%Test D_E Can I do this?
         Tg = 1132.4 ;
         cutoff_Si_O = 2.05;
     case 9
-        D_E = 1;
+        D_E = 1.1;
         Tg = 1166.7 ;
         cutoff_Si_O = 2.05;
     end
@@ -56,7 +56,7 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
     cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
     else
     %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
-    cd ([getenv('HOME'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
     end
     data = fopen('md300K.lammpstrj');
     %%Pre-processing Data and convert to a matrix in traj

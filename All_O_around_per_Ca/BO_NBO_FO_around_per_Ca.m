@@ -2,7 +2,6 @@
 %%%Ca
 clear all; close all; clc;
 
-user = input('User is ','s');
 %defualt Ca composition = 30%
 %i_c is now from 1:9 meaning 0% to 80% 
 
@@ -62,8 +61,13 @@ TO_a_Ca = 0;
 N_Ca = 0;
 
 
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
-
+ if ispc   
+ cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+ else
+ %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+ cd ([getenv('HOME'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
+ end
+ 
 data = fopen('md300K_refined.lammpstrj');
 
 %%Pre-processing Data and convert to a matrix in traj
@@ -98,7 +102,7 @@ variable        Mg equal 7
 variable        Fe equal 8
 %}
 
-L= 34.9159548486583; %Size of the system
+
         for atom_Ca = 1:1:N_atom
             if traj(atom_Ca,2) == 5  %Find the Ca atom    
                 N_Ca = N_Ca+1;

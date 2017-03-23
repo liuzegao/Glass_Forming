@@ -84,9 +84,6 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
             tline = str2num(fgetl(data));
             traj(i,:)=tline; %traj=matrix
         end
-        
-        Si_struct(i_c,1:N_frame,1:N_atom) =  struct('exist',0,'N_O_around',0,'atom_id_O_around',[]);
-        O_struct(i_c,1:N_frame,1:N_atom) = struct('exist',0,'N_Si_around',0,'atom_id_Si_around',[],'genre','None');
         %%id type x y z 
         %{
         variable        Al equal 1
@@ -104,11 +101,9 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
                 N_Ca=N_Ca+1;
             elseif traj(atom_O,2) == 2
                 N_Si=N_Si+1;
-                Si_struct(i_c,N_frame,atom_O).exist = 1;
             elseif traj(atom_O,2) == 4
                 Si_around = 0;
                 N_O = N_O+1;
-                O_struct(i_c,N_frame,atom_O).exist = 1;
                 for atom_Si = 1:1:N_atom
                     if traj(atom_Si,2) == 2
                         if abs(traj(atom_Si,3)-traj(atom_O,3)) < L/2
@@ -129,22 +124,16 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
                         distance_min = sqrt(x_delta^2+y_delta^2+z_delta^2);               
                         if distance_min <= cutoff_Si_O
                             Si_around = Si_around+1;
-                            O_struct(i_c,N_frame,atom_O).N_Si_around = O_struct(i_c,N_frame,atom_O).N_Si_around+1;
-                            Si_struct(i_c,N_frame,atom_Si).N_O_around = Si_struct(i_c,N_frame,atom_Si).N_O_around +1;
-                            O_struct(i_c,N_frame,atom_O).atom_id_Si_around = [O_struct(i_c,N_frame,atom_O).atom_id_Si_around, atom_Si];
-                            Si_struct(i_c,N_frame,atom_Si).atom_id_O_around = [Si_struct(i_c,N_frame,atom_Si).atom_id_O_around, atom_O];
+
                         end
                     end
                 end
                 if Si_around == 0  %% Question: Is only 1 Si atom around considered NBO ?
                         FO = FO+1;
-                        O_struct(i_c,N_frame,atom_O).genre = 'FO';
                 elseif Si_around == 1
                         NBO = NBO+1;
-                        O_struct(i_c,N_frame,atom_O).genre = 'NBO';
                 elseif Si_around == 2
                         BO = BO+1;
-                        O_struct(i_c,N_frame,atom_O).genre = 'BO';
                 end      
             end
         end

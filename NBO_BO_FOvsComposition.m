@@ -1,8 +1,12 @@
 clear all; close all; clc;
 
-cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
-
-load('TwoStatsModel_Refined.mat') 
+if ispc
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
+else
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
+end
+ 
+load('TwoStatsModel_Revised.mat') 
 
 figure(1)
 hold on
@@ -17,8 +21,12 @@ plot(i,NBOratio_simulation,'-.*r',i,BOratio_simulation,'-.*k',i,FOratio_simulati
 %% Input Data 2500K %%
 clear all;
 
-cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
-
+if ispc
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
+else
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
+end
+    
 load('TwoStatsModel_Revised_2500K.mat') 
 
 i = 1:1:9;
@@ -28,8 +36,8 @@ plot(i,NBOratio_simulation,'-*r',i,BOratio_simulation,'-*k',i,FOratio_simulation
     'MarkerSize',5,...
     'MarkerFaceColor',[0.5,0.5,0.5]);
 axis([0 80 0 1]);
-title('300k vs 2500k','fontsize',16,'fontweight','bold');
+title('NBO,BO,FO Ratio vs Composition 300K,2500K','fontsize',16,'fontweight','bold');
 xlabel('x(Ca %)','fontsize',14);
 ylabel('OxygenType/Numer of O' ,'fontsize',14);
-legend('NBO simulation','BO simulation','FO simulation','NBO simulation 2500k','BO simulation 2500k','FO simulation 2500k','fontweight','bold');
+legend('NBO simulation 300K','BO simulation 300K','FO simulation 300K','NBO simulation 2500k','BO simulation 2500k','FO simulation 2500k','fontweight','bold');
 hold off;
