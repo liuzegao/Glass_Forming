@@ -2,6 +2,7 @@
 %%%Ca
 clear all; close all; clc;
 
+
 %defualt Ca composition = 30%
 %i_c is now from 1:9 meaning 0% to 80% 
 
@@ -60,14 +61,13 @@ FO_a_Ca = 0;
 TO_a_Ca = 0;
 N_Ca = 0;
 
+    if ispc   
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+    else
+    %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
+    end
 
- if ispc   
- cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
- else
- %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
- cd ([getenv('HOME'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
- end
- 
 data = fopen('md300K_refined.lammpstrj');
 
 %%Pre-processing Data and convert to a matrix in traj
@@ -77,18 +77,23 @@ else
     N_frame = 21;
 end
 for i_frame = 1:1:N_frame %for frame
-for n=1:4
-  tline = fgetl(data); 
-end
-N_atom = str2num(tline);
-for n=5:9
-  tline = fgetl(data);
-end
-traj = zeros(N_atom,5);
-for i =1:1:N_atom  %First time step 4410000 Last time step 4510000  
-    tline = str2num(fgetl(data));
-    traj(i,:)=tline; %traj=matrix
-end
+
+        for n=1:4
+            tline = fgetl(data); 
+        end
+        N_atom = str2num(tline);
+        tline = fgetl(data);
+        tline = fgetl(data);
+        L_item(1,:) = str2num(tline);
+        L = L_item(1,2);
+        for n=7:9
+            tline = fgetl(data);
+        end
+        traj = zeros(N_atom,5);
+        for i =1:1:N_atom  %First time step 4410000 Last time step 4510000  
+            tline = str2num(fgetl(data));
+            traj(i,:)=tline; %traj=matrix
+        end
 
 %% Parameters in the data:id type x y z 
 %{
@@ -101,7 +106,6 @@ variable        K equal 6
 variable        Mg equal 7
 variable        Fe equal 8
 %}
-
 
         for atom_Ca = 1:1:N_atom
             if traj(atom_Ca,2) == 5  %Find the Ca atom    
@@ -153,7 +157,10 @@ i = 2:1:9;
 i = (i-1)*10;
 AO = NBO_around_per_Ca+BO_around_per_Ca+FO_around_per_Ca;
 figure(1)
-plot(i,NBO_around_per_Ca,'-b',i,BO_around_per_Ca,'-g',i,FO_around_per_Ca,'-r',i,AO,'-m')
+plot(i,NBO_around_per_Ca,'-*b',i,BO_around_per_Ca,'-*g',i,FO_around_per_Ca,'-*r',i,AO,'-*m',...
+    'LineWidth',2,...
+    'MarkerSize',5,...
+    'MarkerFaceColor',[0.5,0.5,0.5])
 title('Ca Coordination Number of BO, NBO and FO vs Ca Composition');
 xlabel('x(Ca %)');
 ylabel('BO, NBO and FO Around Each Ca' );

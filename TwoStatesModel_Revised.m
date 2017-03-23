@@ -53,7 +53,7 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
     display(i_c)
     %% Input Data 
     if ispc   
-    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
     else
     %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
     cd ([getenv('HOME'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
