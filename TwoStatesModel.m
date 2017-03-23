@@ -36,8 +36,8 @@ variable        Mg equal 7
 variable        Fe equal 8
 %}
 %% Analyze Simulation Data
-L= 34.9159548486583; 
-N_atom = 2995;
+L= 33.968012; 
+N_atom = 2996;
 NBO = 0;
 BO = 0;
 FO = 0;
@@ -149,14 +149,14 @@ for j = 1:1:N_Ca
     end
 end
 
-NBOratio_model(i_c) = N_NBO/N_O;
-BOratio_model(i_c) = N_BO/N_O;
-FOratio_model(i_c) = N_FO/N_O;
+NBOratio_model(i_c) = NBO/N_O;
+BOratio_model(i_c) = BO/N_O;
+FOratio_model(i_c) = FO/N_O;
 
 %Simulation Data Calculation
-NBOratio_i(i_c) = NBO/N_O;
-BOratio_i(i_c) = BO/N_O;
-FOratio_i(i_c) = FO/N_O;
+NBOratio_i(i_c) = N_NBO/N_O;
+BOratio_i(i_c) = N_BO/N_O;
+FOratio_i(i_c) = N_FO/N_O;
 
 d_NBO_i(i_c) = N_NBO/N_O - NBO/N_O;
 d_BO_i(i_c) = N_BO/N_O - BO/N_O;

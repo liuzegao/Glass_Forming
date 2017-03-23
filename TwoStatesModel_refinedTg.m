@@ -52,7 +52,12 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
     end
     display(i_c)
     %% Input Data 
-    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+    if ispc   
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+    else
+    %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+    cd ([getenv('HOME'),'/Dropbox/CS 2500K/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
+    end
     data = fopen('md300K.lammpstrj');
     %%Pre-processing Data and convert to a matrix in traj
     if i_c == 3 || i_c == 5 %In old data, only composition 20 and 40 has 101 frames
