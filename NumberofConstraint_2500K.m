@@ -19,29 +19,29 @@ for  i_c = 1:9
 switch(i_c)
     %FO_simulation_around_Ca+BO_simulation_around_Ca
     case 2
-        BO_simulation_around_Ca =  2.27472527472527;
-        FO_simulation_around_Ca =  0.0398351648351648;
+        BO_simulation_around_Ca =  1.540750915750916;
+        FO_simulation_around_Ca =  0.093406593406593;
     case 3
-        BO_simulation_around_Ca =  1.57175904506339;
-        FO_simulation_around_Ca =  0.018469069870939;
+        BO_simulation_around_Ca =  0.935469514908767;
+        FO_simulation_around_Ca =  0.133956386292835;
     case 4
-        BO_simulation_around_Ca =  1.25363558597092;
-        FO_simulation_around_Ca =  0.061305959509552;
+        BO_simulation_around_Ca =  0.935985172512119;
+        FO_simulation_around_Ca = 0.183347590533219;
     case 5
-        BO_simulation_around_Ca =  0.833783378337834;
-        FO_simulation_around_Ca = 0.332508761080190;
+        BO_simulation_around_Ca =  0.613790970933828;
+        FO_simulation_around_Ca = 0.277468563182849;
     case 6
-        BO_simulation_around_Ca =  0.590396825396825;
-        FO_simulation_around_Ca = 0.456587301587302;
+        BO_simulation_around_Ca =  0.440476190476190;
+        FO_simulation_around_Ca = 0.378253968253968;
     case 7
-        BO_simulation_around_Ca =  0.288825396825397;
-        FO_simulation_around_Ca = 0.672317460317460;
+        BO_simulation_around_Ca = 0.253269841269841;
+        FO_simulation_around_Ca = 0.628825396825397;
     case 8
-        BO_simulation_around_Ca =  0.0845576742732104;
-        FO_simulation_around_Ca = 1.465666354068980;
+        BO_simulation_around_Ca =  0.105345420443889;
+        FO_simulation_around_Ca = 1.495154735854955;
     case 9
-        BO_simulation_around_Ca =  0.0100480559196156;
-        FO_simulation_around_Ca = 2.864307557885540;
+        BO_simulation_around_Ca =  0.024726955002184;
+        FO_simulation_around_Ca = 2.646526867627785;
 end
 
 
