@@ -79,7 +79,7 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
         tline = fgetl(data);
         tline = fgetl(data);
         L_item(1,:) = str2num(tline);
-        L = L_item(1,2);
+        L = L_item(1,2)-L_item(1,1);
         for n=7:9
             tline = fgetl(data);
         end

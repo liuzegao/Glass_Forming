@@ -1,4 +1,4 @@
-clear all; close all; clc;
+clear; close all; clc;
 
 if ispc
     cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])

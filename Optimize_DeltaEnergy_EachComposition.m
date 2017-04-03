@@ -2,7 +2,7 @@ clear all;clc;close all;
 
 cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
 
-load('TwoStatsModel_Refined.mat') 
+load('TwoStatsModel_Revised.mat') 
 
 
 %% New For Loop to Test Different D_E

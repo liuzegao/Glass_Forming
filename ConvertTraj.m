@@ -2,15 +2,53 @@
 %%%with different index 
 clear all; close all; clc;
 
-N_frame = 21;
-user = input('User is ','s');
-data = fopen('md300K.lammpstrj');
+
 %defualt Ca composition = 30%
 %i_c is now from 1:9 meaning 0% to 80% 
 NBOratio_i = zeros(1,9);
 %for  i_c = 1:9    
 for i_c = 1:1:9
-cd (['/Users/',user,'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]);
+     cutoff_Si_O = 2.05;
+    D_E = 0.3; %%Test Delta Energy between State 1 and State 2 
+    switch(i_c) %Select Different Tg
+    case 1
+         Tg = 1800.6;
+        D_E = 1;
+    case 2
+        D_E = 1;
+         Tg =1675.0;
+    case 3
+       D_E = 1;
+       Tg= 1791.6;
+    case 4
+        D_E = 0.5;
+         Tg =1469.9;
+    case 5
+       D_E = 1;
+       Tg = 1347.7 ;
+    case 6 
+        D_E = 0.35;
+        Tg = 1202.5;
+    case 7
+        D_E = 0.25;
+        Tg = 1160.9 ;
+        cutoff_Si_O = 1.95;
+    case 8
+        D_E = 0.12; %%Test D_E Can I do this?
+        Tg = 1132.4 ;
+        cutoff_Si_O = 2.05;
+    case 9
+        D_E = 1;
+        Tg = 1166.7 ;
+        cutoff_Si_O = 2.05;
+    end
+    display(i_c)
+    if ispc   
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)])
+    else
+    %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/C',num2str((i_c-1)*10),'S',num2str((11-i_c)*10)]) 
+    end
 data = fopen('md300K.lammpstrj');
 fid = fopen('md300K_refined.lammpstrj','w');
 
@@ -37,7 +75,7 @@ for i_frame = 1:1:N_frame  %for frame
         tline = fgetl(data);
         Top_string(1,6) = {tline};
         L_item(1,:) = str2num(tline);
-        L = L_item(1,2);
+        L = L_item(1,2)-L_item(1,1);
         for n=7:9
             tline = fgetl(data);
             Top_string(1,n) = {tline};
@@ -90,7 +128,7 @@ for atom_O = 1:1:N_atom
                     z_delta = abs(L-abs(traj(atom_Si,5)-traj(atom_O,5)));
                 end
                     distance_min = sqrt(x_delta^2+y_delta^2+z_delta^2);               
-                if distance_min <= 1.8
+                if distance_min <= cutoff_Si_O
                     Si_around = Si_around+1;
                 end
             end

@@ -17,41 +17,19 @@ FO_around_per_Ca = zeros(1,8);
 %NBO_around_per_Ca_STD = zeros(1,8);
 TO_around_per_Ca = zeros(1,8); 
 
-for  i_c = 2:9 % i_c 1-> 0% 2->10% 3->10%...
-switch(i_c)
-    case 2    
-    Cutoff_NBO_Ca = 2.85;
-    Cutoff_BO_Ca = 3.05;
-    Cutoff_FO_Ca = 2.55;
-    case 3    
-    Cutoff_NBO_Ca = 3.15;
-    Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 2.75;
-    case 4    
-    Cutoff_NBO_Ca = 2.85;
-    Cutoff_BO_Ca = 3.05;
-    Cutoff_FO_Ca = 2.75;
-        case 5    
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca = 2.95;
-     Cutoff_FO_Ca = 2.95;
-        case 6    
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 2.95;
-    case  7
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca =2.95;
-    Cutoff_FO_Ca = 2.95;
-         case 8    
-    Cutoff_NBO_Ca = 2.95;
-    Cutoff_BO_Ca = 2.95;
-    Cutoff_FO_Ca = 3.05;
-        case 9    
-    Cutoff_NBO_Ca = 3.05;
-    Cutoff_BO_Ca = 2.85;
-    Cutoff_FO_Ca = 3.05;
+if ispc
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses'])
+else
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses'])
 end
+    
+Cutoff= xlsread('Ca-O 1st Cutoff.xlsx');
+for  i_c = 2:9 % i_c 1-> 0% 2->10% 3->10%...
+ 
+    Cutoff_NBO_Ca = Cutoff(21+i_c,3);
+    Cutoff_BO_Ca = Cutoff(21+i_c,4);
+    Cutoff_FO_Ca = Cutoff(21+i_c,5);
+
  if i_c == 1 %No Ca in composition 0%
       continue;
  end
@@ -71,7 +49,8 @@ N_Ca = 0;
 data = fopen('md2500K_refined.lammpstrj');
 
 %%Pre-processing Data and convert to a matrix in traj
-    N_frame = 21;
+
+    N_frame = 101;
 
 for i_frame = 1:1:N_frame %for frame
 
@@ -82,7 +61,7 @@ for i_frame = 1:1:N_frame %for frame
         tline = fgetl(data);
         tline = fgetl(data);
         L_item(1,:) = str2num(tline);
-        L = L_item(1,2);
+        L = L_item(1,2)-L_item(1,1);
         for n=7:9
             tline = fgetl(data);
         end
@@ -158,8 +137,23 @@ plot(i,NBO_around_per_Ca,'-*b',i,BO_around_per_Ca,'-*g',i,FO_around_per_Ca,'-*r'
     'LineWidth',2,...
     'MarkerSize',5,...
     'MarkerFaceColor',[0.5,0.5,0.5])
-title('Ca Coordination Number of BO, NBO and FO vs Ca Composition');
+title('Ca Coordination Number of BO, NBO and FO vs Ca Composition at 2500K');
 xlabel('x(Ca %)');
 ylabel('BO, NBO and FO Around Each Ca' );
 legend('NBO','BO','FO','All O');
 
+%fid = fopen('BO_NBO_FO_around_Ca.txt','w');
+%fprintf(fid,[NBO_around_per_Ca,'\n']);
+%fprintf(fid,[BO_around_per_Ca,'\n']);
+%fprintf(fid,[FO_around_per_Ca,'\n']);
+    if ispc   
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab/All_O_around_per_Ca'])
+    else
+    %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/Glass_Forming_Matlab/All_O_around_per_Ca']) 
+    end
+fid = fopen('BO_NBO_FO_around_Ca_2500K.txt','w');
+fprintf(fid,[num2str(NBO_around_per_Ca),'\n']);
+fprintf(fid,[num2str(BO_around_per_Ca),'\n']);
+fprintf(fid,[num2str(FO_around_per_Ca),'\n']);
+fclose(fid)
