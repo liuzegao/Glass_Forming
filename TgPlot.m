@@ -8,7 +8,7 @@ for i = 1:1:9
         else
             column =5; 
         end
-        cd (['/Users/liuze/Desktop/CS_Tg/C',num2str((i-1)*10),'S',num2str((11-i)*10)])
+        cd (['/Users/VickiHuuu/Desktop/CS_Tg/C',num2str((i-1)*10),'S',num2str((11-i)*10)])
         data = dlmread('cool.dat');
         T=data(:,2);
         switch(i)

@@ -15,8 +15,16 @@ FOratio_model = zeros(1,9);
 Si_simulation = zeros(1,9); 
 O_simulation = zeros(1,9);
 Ca_simulation = zeros(1,9);
+
+if ispc
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses'])
+else
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses'])
+end
+    
+Cutoff= xlsread('Ca-O 1st Cutoff.xlsx');
+
 for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
-    cutoff_Si_O = 2.05;
     D_E = 0.5; %%Test Delta Energy between State 1 and State 2 
     switch(i_c) %Select Different Tg
     case 1
@@ -24,32 +32,31 @@ for  i_c = 1:9 %i_c from 1:9 referst to Ca composition from 0% to 80%
         D_E = 1;
     case 2
         D_E = 1;
-         Tg =1675.0;
+
     case 3
        D_E = 1;
-       Tg= 1791.6;
+
     case 4
         D_E = 0.5;
-         Tg =1469.9;
+ 
     case 5
        D_E = 1;
-       Tg = 1347.7 ;
+
     case 6 
         D_E = 0.35;
-        Tg = 1202.5;
+
     case 7
         D_E = 0.25;
-        Tg = 1160.9 ;
-        cutoff_Si_O = 1.95;
     case 8
         D_E = 0.12; %%Test D_E Can I do this?
-        Tg = 1132.4 ;
-        cutoff_Si_O = 2.05;
     case 9
        D_E = 0.1;
-        Tg = 1166.7 ;
-        cutoff_Si_O = 2.05;
     end
+    cutoff_Si_O =  Cutoff(43+i_c,2);
+    if i_c ~= 1
+        Tg = Cutoff(54+i_c,2);
+    end
+    D_E = Cutoff(65+i_c,2);
     display(i_c)
     %% Input Data 
     if ispc   
@@ -199,16 +206,15 @@ end
 %%Plot
 i = 1:1:9;
 i = (i-1)*10;
-plot(i,NBOratio_model,'-.or',i,BOratio_model,'-.ok',i,FOratio_model,'-.ob',i,NBOratio_simulation,'-*r',i,BOratio_simulation,'-*k',i,FOratio_simulation,'-*b',... 
+plot(i,NBOratio_model,'-.or',i,BOratio_model,'-.ok',i,FOratio_model,'-.ob',i,NBOratio_simulation,'^r',i,BOratio_simulation,'^k',i,FOratio_simulation,'^b',... 
     'LineWidth',2,...
-    'MarkerSize',5,...
+    'MarkerSize',8,...
     'MarkerFaceColor',[0.5,0.5,0.5]);
 axis([0 80 0 1]);
-title('Two-states Model Plot','fontsize',16,'fontweight','bold');
+title('Two-states Model Plot 2500K','fontsize',16,'fontweight','bold');
 xlabel('x(Ca %)','fontsize',14);
 ylabel('OxygenType/Numer of O' ,'fontsize',14);
 legend('NBO Model','BO Model','FO Model','NBO simulation','BO simulation','FO simulation','fontweight','bold');
-
 
 
 

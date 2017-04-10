@@ -17,7 +17,7 @@ plot(i,NBOratio_simulation,'-.*r',i,BOratio_simulation,'-.*k',i,FOratio_simulati
     'MarkerSize',5,...
     'MarkerFaceColor',[0.5,0.5,0.5]);
 
-
+.
 %% Input Data 2500K %%
 clear all;
 

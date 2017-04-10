@@ -1,7 +1,13 @@
 clear all; close all; clc;
 
 
-cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
+if ispc   
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB'])
+else
+    %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/Glass_Forming_Matlab_DB']) 
+end
+
 
 load('TwoStatsModel_Revised_2500K.mat');
 
@@ -15,35 +21,20 @@ NBO_simulation_ic = zeros(1,9);
 FO_simulation_ic = zeros(1,9);
 N_TotalO_ic = zeros(1,9);
 
+    if ispc   
+    cd ([getenv('HOMEDRIVE') getenv('HOMEPATH'),'/Dropbox/CS Glasses/Glass_Forming_Matlab/All_O_around_per_Ca'])
+    else
+    %/Users/zegaoliu/Dropbox/CS Glasses/C80S20
+    cd ([getenv('HOME'),'/Dropbox/CS Glasses/Glass_Forming_Matlab/All_O_around_per_Ca']) 
+    end
+     data_simulation= dlmread('BO_NBO_FO_around_Ca_2500K.txt');
+     
 for  i_c = 1:9
-switch(i_c)
-    %FO_simulation_around_Ca+BO_simulation_around_Ca
-    case 2
-        BO_simulation_around_Ca =  1.540750915750916;
-        FO_simulation_around_Ca =  0.093406593406593;
-    case 3
-        BO_simulation_around_Ca =  0.935469514908767;
-        FO_simulation_around_Ca =  0.133956386292835;
-    case 4
-        BO_simulation_around_Ca =  0.935985172512119;
-        FO_simulation_around_Ca = 0.183347590533219;
-    case 5
-        BO_simulation_around_Ca =  0.613790970933828;
-        FO_simulation_around_Ca = 0.277468563182849;
-    case 6
-        BO_simulation_around_Ca =  0.440476190476190;
-        FO_simulation_around_Ca = 0.378253968253968;
-    case 7
-        BO_simulation_around_Ca = 0.253269841269841;
-        FO_simulation_around_Ca = 0.628825396825397;
-    case 8
-        BO_simulation_around_Ca =  0.105345420443889;
-        FO_simulation_around_Ca = 1.495154735854955;
-    case 9
-        BO_simulation_around_Ca =  0.024726955002184;
-        FO_simulation_around_Ca = 2.646526867627785;
+if i_c ~= 1
+        NBO_simulation_around_Ca =  data_simulation(1,i_c-1);    
+        BO_simulation_around_Ca =  data_simulation(2,i_c-1);
+        FO_simulation_around_Ca = data_simulation(3,i_c-1);
 end
-
 
 Total_Atom = Si_simulation(i_c)+Ca_simulation(i_c)+BO_simulation(i_c)+NBO_simulation(i_c)+FO_simulation(i_c);
 N_TotalO_ic(1,i_c) = BO_simulation(i_c)+NBO_simulation(i_c)+FO_simulation(i_c) ;
@@ -53,7 +44,7 @@ BO_simulation_ic(1,i_c) = BO_simulation(i_c);
 NBO_simulation_ic(1,i_c) = NBO_simulation(i_c);
 FO_simulation_ic(1,i_c) = FO_simulation(i_c);
 if i_c ~= 1
-n_BS(i_c) = (4*Si_simulation(i_c)+4*Ca_simulation(i_c)*(FO_simulation_around_Ca+BO_simulation_around_Ca))/Total_Atom;
+n_BS(i_c) = (4*Si_simulation(i_c)+Ca_simulation(i_c)*(FO_simulation_around_Ca+NBO_simulation_around_Ca))/Total_Atom;
 n_BB(i_c) = (5*Si_simulation(i_c)+BO_simulation(i_c))/Total_Atom;
 n_c(1,i_c) = n_BS(i_c)+n_BB(i_c);
 end
@@ -71,15 +62,15 @@ for k =1:1:9
     y2(k) = 3+0.05;
 end
 plot(i,n_c,'-bs',i,y1,'--r',i,y2,'--g')
-title('\fontsize{16}Number of Constraints per Atom vs Ca Composition','Fontsiz',12);
+title('\fontsize{16}Number of Constraints per Atom vs Ca Composition 2500K','Fontsiz',12);
 xlabel('x(Ca %)','Fontsiz',12,'fontweight','bold');
 ylabel('nc','Fontsiz',12,'fontweight','bold' );
-axis([0 80 2.5 5.5]);
+axis([0 80 2.5 3.8]);
 
 
 figure(2)
 plot(i,n_BB,'-s',i,n_BS,'-s')
-title('\fontsize{16}Number of BB Constraints per Atom vs Ca Composition','Fontsiz',12);
+title('\fontsize{16}Number of BB Constraints per Atom vs Ca Composition 2500K','Fontsiz',12);
 xlabel('x(Ca %)','Fontsiz',12,'fontweight','bold');
 ylabel('nBB','Fontsiz',12,'fontweight','bold' );
 legend('BB','BS')
